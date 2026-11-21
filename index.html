@@ -253,6 +253,8 @@ nav button:disabled{opacity:.3}
 @media(max-width:640px){.polgrid>.pol{width:100%;max-width:320px}.vinyls>.vin{width:46%}.postits{margin:2rem 1rem 2.4rem}.liner{grid-template-columns:1fr}}
 .stampgrid{grid-template-columns:repeat(3,minmax(0,1fr));max-width:920px}
 @media(max-width:640px){.stampgrid{grid-template-columns:1fr}}
+.mindgrid{display:flex;flex-wrap:wrap;justify-content:center}.mindgrid>*{width:265px}
+@media(max-width:640px){.mindgrid>*{width:100%}}
 </style></head><body>
 <div id="glow"></div><div id="rname"></div><div id="track"></div>
 <nav><button id="prev" aria-label="Previous room">&#8592;</button><div id="dots"></div><button id="next" aria-label="Next room">&#8594;</button></nav>
@@ -302,12 +304,11 @@ mind:[
 ["🇮🇳","More poetic, funny and himself in Hindi. He wishes Miona would understand Hindi so she could meet that side of him, too. (I am working on it, jaan.)"],
 ["🎨","Thinks of himself as an artist. \u201cMy work is me.\u201d"],
 ["🌀","More creative than operator, by his own framing."],
-["🕊️","Doesn't want anyone else in control of his emotions. Goal: be happy wherever he is and keep creating beauty."],
 ["🔓","Believes life after 18 is about unlearning conditioning and learning to think independently."],
 ["🧭","Seeks net-new experiences and loves noticing how they change his thinking."],
 ["🦁","Says I have made him more courageous, even in his work. Proudest thing I have ever done."],
 ["📓","He journals often, and then loves to rip the pages out, tear them apart and throw them away. Writing it out, letting it go."],
-["⭕","Loves explaining things with Venn diagrams."],["⚙️","Builds systems that strip away what doesn't matter so his mind is free for what does."],["🌊","Wants to live and work from overflow and giving."]],
+["⚙️","Builds systems that strip away what doesn't matter so his mind is free for what does."],["🌊","Wants to live and work from overflow and giving."]],
 work:[
 ["📺", "Where it all began: 4 Oct 2024, from his home in Vancouver, the “plex it //” streams on YouTube, rabbit holes on Tiffany, Loro Piana, Ben & Jerry's, Monaco and the first nuclear reactor. My curious guy from day one."], ["🔥", "Livestreaming on X and YouTube is his peace of mind. Nearly daily for about two years, and I never get tired of that voice."], ["⏱️", "Ideal stream: about 1.5 to 2 hours."], ["💬", "“A livestream a day keeps the ordinary away.”"], ["🎙️", "586 episodes and counting, nearly every day for two years. Discipline is hot."], ["🏛️", "The best AI apps are built on philosophy, not features."], ["✂️", "Builds clip bots and streaming workflows."], ["✒️", "Newsletter on beehiiv, YouTube @prxshantbagga, X @prcshxnt."], ["🗓️", "His goals for this chapter: a stable routine, health, daily streaming."], ["🔁", "Early years: travel, conferences, meetups. Now: a long-term stable foundation."]],
 words:["it's a fine balance...", "it's a push and pull dynamic", "it's a spectrum", "it's interesting, right...?", "there's this notion that...", "I'm a curious guy", "I told you, right...?", "people love to serve beauty, baby", "I want to create so much beauty with you", "we are concentric circles baby", "it's like a Venn diagram...", "my work is me", "we make the rules", "what now?", "I love you SO MUCH", "ich liebe dich", "merci mon cœur", "u ma wifey", "you are my muse", "ohhh my goood", "highs and lows are part of it", "we love to explore all sides", "when I'm in flow, we create beauty", "this is very interesting", "know yourself", "we are live", "tell me more", "this is it", "every single day", "keep going", "the goal is...", "let's go, let's go", "oh my god", "what is happening over here?", "let's look into this", "rabbit hole", "so beautiful", "really cool, really cool", "net new", "forcing function", "I'm really curious"],
@@ -363,7 +364,7 @@ let st='';for(let i=0;i<70;i++)st+=`<i style="position:absolute;left:${rnd(0,100
 return `<div class="bg" data-px="0.5">${st}</div>${head("Room V","The Constellation of Thinkers","The minds and books you keep coming back to, linked like stars. I love how your mind works. Hover or tap a star for one of their lines.")}
 <div class="sky rv"><svg viewBox="0 0 100 100" preserveAspectRatio="none">${lines}</svg>${pts.map((p,i)=>`<button type="button" class="star" data-i="${i}" style="left:${Math.max(innerWidth<640?14:6,Math.min(innerWidth<640?86:94,p.x))}%;top:${Math.max(4,Math.min(96,p.y))}%"><i></i><span>${p.t[0]}</span></button>`).join('')}<div id="thq" role="status" aria-live="polite"></div></div>
 <div class="tchips">${D.thinkers.map((t,i)=>`<button type="button" class="tchip" data-i="${i}">${t[0]}</button>`).join('')}</div>
-<h3 class="rv">Notes from his inner world</h3><div class="grid">${D.mind.map((f,i)=>card('note-card',f,i)).join('')}</div>`}});
+<h3 class="rv">Notes from his inner world</h3><div class="grid mindgrid">${D.mind.map((f,i)=>card('note-card',f,i)).join('')}</div>`}});
 R.push({k:"words",t:"Things He Says",h:()=>`<div class="rings bg" style="left:50%;top:40%;inset:auto">${[0,2,4,6].map(s=>`<i style="animation-delay:-${s}s"></i>`).join('')}</div>${head("Room VI","Concentric Circles","A Venn diagram of your favorite words. I can hear you saying every one of them.")}
 <div class="venn rv"><div class="a">a fine balance</div><div class="b">a spectrum</div><div class="c">push and pull</div><em>\u201cI'm a<br>curious guy\u201d</em></div>
 <div class="bubbles">${D.words.map((w,i)=>`<span class="bub rv" style="animation-delay:-${rnd(0,5).toFixed(1)}s;transition-delay:${i*50}ms;font-size:${rnd(.9,1.25).toFixed(2)}rem">\u201c${w}\u201d</span>`).join('')}</div>`});
