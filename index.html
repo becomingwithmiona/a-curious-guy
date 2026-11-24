@@ -286,6 +286,20 @@ nav button:disabled{opacity:.3}
 .room.on .fp.rv{transform:rotate(var(--r,0deg))}
 .fp:hover{z-index:2}
 @media (max-width:560px){.fam-photos{gap:1.3rem .9rem;margin:2rem auto .5rem}.fp{width:calc(50% - .6rem)!important;margin-top:0!important;padding:6px 6px 18px}.room.on .fp.rv{transform:rotate(calc(var(--r,0deg) * .6))}}
+.fboard{column-count:3;column-gap:1.8rem;max-width:1150px;margin:0 auto 1rem;padding:.8rem .6rem 0}
+.fboard>*{break-inside:avoid;-webkit-column-break-inside:avoid;display:block;margin:0 0 2rem}
+.fboard .fp{width:82%;margin:0 auto 2rem;display:block}
+.fboard .fp:nth-of-type(even){margin-left:14%}.fboard .fp:nth-of-type(odd){margin-left:4%}
+.stk{position:relative;background:var(--bg,#fdfbf6);color:var(--navy);padding:1.5rem 1.1rem 1rem;border-radius:3px 3px 14px 3px;box-shadow:0 12px 26px rgba(0,0,0,.42)}
+.stk.tape::before{content:"";position:absolute;top:-11px;left:50%;width:84px;height:22px;margin-left:-42px;background:rgba(207,224,255,.7);transform:rotate(-2.5deg);box-shadow:0 2px 4px rgba(0,0,0,.15)}
+.stk.pin::before{content:"";position:absolute;top:8px;left:50%;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#f3d79a,var(--gold) 55%,#8a6a2c);box-shadow:0 3px 4px rgba(0,0,0,.35)}
+.stk em{display:block;font-family:'Playfair Display',serif;font-style:italic;font-size:.86rem;color:#4a5f8f;margin-bottom:.3rem;line-height:1.35}
+.stk p{margin:0;font-family:Caveat,cursive;font-size:1.32rem;line-height:1.3}
+.stk small{display:block;text-align:right;margin-top:.5rem;font-family:Caveat,cursive;font-size:1.25rem;color:var(--blue)}
+.room.on .stk.rv{transform:rotate(var(--r,0deg))}
+.fboard+.sec{margin-top:1rem}
+@media (max-width:900px){.fboard{column-count:2;column-gap:1.2rem}}
+@media (max-width:560px){.fboard{column-count:1;padding:.6rem .3rem 0}.fboard .fp{width:72%!important;padding:8px 8px 22px}.fboard .fp:nth-of-type(even){margin-left:24%}.fboard .fp:nth-of-type(odd){margin-left:4%}.room.on .stk.rv{transform:rotate(calc(var(--r,0deg) * .5))}.stk p{font-size:1.25rem}}
 .room.on .fn.rv{transform:rotate(var(--r,0deg))}
 @media (max-width:560px){.room.on .fn.rv{transform:none}.fn dd{font-size:1.25rem}}
 </style></head><body>
@@ -454,17 +468,21 @@ const FAM=[
 {n:"Prashansa",a:[[1,"We used to love listening to Punjabi songs, especially Honey Singh! After Mom and Dad made us go to sleep, we would secretly stay up and memorise the lyrics to all his rap songs. Even today, we can sing almost all Honey Singh songs together, and I absolutely love that. It\u2019s something I really miss!"],[2,"Cute, naughty and charming! He was such an adorable little boy that everyone found him cute, and girls would go crazy over him."],[3,"When we used to stay with Chachu and Chachi together we used to pull Chachi\u2019s leg and tease her and all of us would end up laughing so much. I think those were some of the happiest times of our lives. We laughed our hearts out and had the best time together!"],[4,"Bhindi, pav bhaji and aloo parathas."],[5,"I think he wanted to become a doctor for a brief period, probably because of our Nanu."],[6,"He has never let anyone touch his hair! Although I guess Miona might be the only exception now."],[7,"He is extremely smart and intelligent. He knows what he wants in life and has the courage to follow his heart. He is an achiever and someone who works really hard to get whatever he sets his mind to. I\u2019m really proud of that about him."],[8,"He used to absolutely hate chicken! And now he will actually argue with you if you tell him not to eat chicken on certain religious days."],[9,"Please get married already! Can\u2019t wait!"],[10,"I love the bond we share. We may not talk regularly, but whenever we do, our conversations are always about life, growth, the future and, of course, some funny incidents.<br><br>Even though he is younger than me, he is much more experienced and smart in many ways. He always guides and motivates me to do better and focus on growing in life. We can discuss absolutely anything and talk for hours, and I genuinely enjoy every bit of it."]]},
 {n:"Prem",a:[[1,"In his childhood he didn\u2019t like non-veg food, so we used to serve it to him saying it\u2019s  paneer, and he happily ate it."],[2,"Ambitious and always want to do something different from others."],[3,"It was very difficult to wake him up for school, and it\u2019s the same till date. He wakes up only when he has committed to meet someone. You might have experienced the same \u{1F609}"],[4,"Bhindi(ladyfinger), Paneer and Pav Bhaji."],[5,"He was always fond of cars and wanted to do something different from others."],[6,"His late waking up, and he has always stayed in touch with family."],[7,"His vision as well as his way of working is very different."],[8,"He gets angry but never shows it to others. He follows \u201cBe Calm\u201d."],[9,"For the coming years, my advice is to get married."]]}
 ];
-/* Family photos: files are gallery/famNN.jpg. Strips sit between the sections so no text is covered; tilt and offset are random on each visit. */
-const FPH=[["fam01","fam09","fam04"],["fam10","fam06","fam03","fam11"],["fam02","fam07","fam05","fam08"]];
-const fstrip=g=>`<div class="fam-photos">${[...g].sort(()=>Math.random()-.5).map((f,i)=>`<figure class="fp rv" style="--r:${rnd(-7,7).toFixed(1)}deg;--tr:${rnd(-6,6).toFixed(1)}deg;--y:${rnd(0,2.2).toFixed(2)}rem;--w:${Math.round(rnd(170,230))}px;transition-delay:${i*90}ms"><img src="gallery/${f}.jpg" alt="a family photo" loading="lazy" decoding="async"></figure>`).join('')}</div>`;
-R.push({k:"family",t:"The Family Room",h:()=>{const fam=FAM.filter(p=>p.a.length);const love=fam.filter(p=>p.a.some(x=>x[0]===10));const rot=['-1.2deg','.9deg','-.6deg','1.1deg','-.9deg'];
+/* Family board: one sticky note per answer, photos (gallery/famNN.jpg) interleaved in rough age order.
+   FL gives each question a short lead-in so the note reads as a statement; FLX overrides it for one person ("Name:q"), "" means no lead.
+   A new person in FAM shows up automatically; answer 10 goes to the "we love you because" wall. */
+const FPH=["fam10","fam09","fam07","fam04","fam11","fam06","fam05","fam08","fam03","fam02","fam01"];
+const FL=["","My favourite memory of him as a child:","As a little boy, in three words:","The naughty years:","When he comes home, he always asks for:","When he was little, he dreamed of becoming:","What has never changed:","What makes me most proud of him:","Something most people don\u2019t know:","My advice for his next year:"];
+const FLX={"Mansi:4":"","Prashil:1":"My favourite memory of him:","Prashil:4":"His favourite food?","Prashil:7":"What makes me most proud:","Prashil:8":"Something most people don\u2019t know?","Prashansa:5":"His childhood dream:","Prem:2":"In three words:","Prem:5":"His childhood dream:","Prem:9":""};
+const FCOL=["#fdfbf6","#eaf2ff","#f6e7c4","#dce8ff","#fff4d8","#e6eefc"];
+R.push({k:"family",t:"The Family Room",h:()=>{const fam=FAM.filter(p=>p.a.length);const love=fam.filter(p=>p.a.some(x=>x[0]===10));
+const notes=[];for(let q=1;q<10;q++){const who=fam.filter(p=>p.a.some(x=>x[0]===q));const st=q%Math.max(who.length,1);who.slice(st).concat(who.slice(0,st)).forEach(p=>{const x=p.a.find(y=>y[0]===q);const k=p.n+':'+q;notes.push({n:p.n,lead:k in FLX?FLX[k]:FL[q],t:x[1]})})}
+const items=[];let pi=0;notes.forEach((nt,i)=>{while(pi<FPH.length&&Math.floor(pi*notes.length/FPH.length)<=i){items.push({ph:FPH[pi]});pi++}items.push(nt)});while(pi<FPH.length)items.push({ph:FPH[pi++]});
+const board=items.map((it,i)=>it.ph?`<figure class="fp rv" style="--r:${rnd(-6,6).toFixed(1)}deg;--tr:${rnd(-6,6).toFixed(1)}deg;transition-delay:${Math.min(i*50,900)}ms"><img src="gallery/${it.ph}.jpg" alt="a family photo" loading="lazy" decoding="async"></figure>`:`<div class="stk rv ${i%3?'tape':'pin'}" style="--r:${rnd(-3.2,3.2).toFixed(1)}deg;--bg:${FCOL[i%FCOL.length]};transition-delay:${Math.min(i*50,900)}ms">${it.lead?`<em>${it.lead}</em>`:''}<p>${it.t}</p><small>~ ${it.n}</small></div>`).join('');
 return `${head("Room X","The Family Room","The people who knew you first. I asked your family a few questions about you, and these are their answers, word for word.")}
 <!-- Family room: content lives in the FAM list in the script. Add a person or answers there; empty people are hidden automatically. -->
-${fstrip(FPH[0])}
-${love.length?`<div class="sec"><h3 class="rv">Prashant, we love you because\u2026</h3><div class="fam-love">${love.map((p,i)=>`<div class="fl rv" ${d(i,120)}><p>${p.a.find(x=>x[0]===10)[1]}</p><small>${p.n}</small></div>`).join('')}</div></div>`:''}
-${fstrip(FPH[1])}
-<div class="sec"><h3 class="rv">Notes from home</h3><div class="fam-notes">${fam.map((p,i)=>{const qa=p.a.filter(x=>x[0]!==10).sort((a,b)=>a[0]-b[0]);if(!qa.length)return '';return `<div class="fn rv" style="--r:${rot[i%rot.length]};transition-delay:${Math.min(i*120,1500)}ms"><h4>${p.n}</h4><dl>${qa.map(x=>`<dt>${FQ[x[0]]}</dt><dd>${x[1]}</dd>`).join('')}</dl></div>`}).join('')}</div></div>
-${fstrip(FPH[2])}`}});
+<div class="fboard">${board}</div>
+${love.length?`<div class="sec"><h3 class="rv">Prashant, we love you because\u2026</h3><div class="fam-love">${love.map((p,i)=>`<div class="fl rv" ${d(i,120)}><p>${p.a.find(x=>x[0]===10)[1]}</p><small>${p.n}</small></div>`).join('')}</div></div>`:''}`}});
 R.push({k:"final",t:"Happy Birthday",h:()=>{let c='';const cs=['#4f8cff','#cfe0ff','#d9b46a','#fff','#2f5fd0'];for(let i=0;i<40;i++)c+=`<i class="confetti" style="left:${rnd(0,100)}%;background:${cs[i%5]};animation-duration:${rnd(6,14)}s;animation-delay:-${rnd(0,14)}s"></i>`;
 return `<div class="bg">${c}</div>${head("Final Room","Happy Birthday, Prashant","The last exhibit is a letter, from your girl.")}
 <div class="env rv"><p>My love,</p><div class="ph">Miona's closing letter goes here.</div><p>I love you SO MUCH,<br>Miona 💙</p></div><div class="hindi-close rv"><p class="deva">तुम्हारी आवाज़ मेरा घर है।</p><p class="rom">Tumhari aawaaz mera ghar hai.</p><p class="mean">Your voice is my home.</p></div>`}});
